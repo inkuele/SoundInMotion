@@ -6,7 +6,7 @@
 var debug = 1,                 // Debug flag: Set to 1 to print values, 0 to disable.
     stlen = 5,                 // Short-term window length (used for quick variations).
     ltlen = 50,                // Long-term window length (used for more stable trends).
-    speedxyz = SensorDataExt.new;  // Create a new SensorDataExt object to track movement data.
+    speedxyz = SensorData.new;  // Create a new SensorDataExt object to track movement data.
 
 speedxyz.stlen_(stlen);        // Set the short-term window size.
 speedxyz.ltlen_(ltlen);        // Set the long-term window size.
@@ -89,3 +89,4 @@ OSCdef(\minibeeRouter).free;
 OSCdef(\test).free;
 OSCdef(\test, { |msg| msg.postln }, '/accelerometer', nil, 8000);
 
+s.freeAll

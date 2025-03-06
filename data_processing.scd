@@ -3,7 +3,7 @@
 // Initialize Variables and Sensor Data Processing //
 /////////////////////////////////////////////////////
 
-var debug = 1,                 // Debug flag: Set to 1 to print values, 0 to disable.
+var debug = 0,                 // Debug flag: Set to 1 to print values, 0 to disable.
     stlen = 5,                 // Short-term window length (used for quick variations).
     ltlen = 50,                // Long-term window length (used for more stable trends).
     speedxyz = SensorData.new;  // Create a new SensorDataExt object to track movement data.
@@ -29,7 +29,7 @@ speedxyz.ltlen_(ltlen);        // Set the long-term window size.
 
     // Compute the short-term standard deviation (measures quick fluctuations).
     // The `explin` function scales values exponentially from [0.001, 0.7] → [0, 1].
-    val = speedxyz.shortStdDev.postln.explin(0.01, 0.7, 0, 1);
+    val = speedxyz.shortStdDev.explin(0.01, 0.7, 0, 1);
 
     // Compute the long-term standard deviation (measures gradual changes).
     // The `linlin` function scales values linearly from [0.001, 0.7] → [0, 1].
@@ -44,7 +44,7 @@ speedxyz.ltlen_(ltlen);        // Set the long-term window size.
     };
 
     // Return computed values as an array.
-    ^[val, longval, lastPeak[0]];
+    [val, longval, lastPeak[0]];
 };
 
 ///////////////////////////////////////////////////////////
@@ -64,6 +64,7 @@ OSCdef(\minibeeRouter, { |msg|
 
     // Process the incoming sensor data.
     data = ~processSensorData.(msg);
+	~data = data;
 
     // Debugging: Print raw sensor message and processed data.
     if (debug == 1) {

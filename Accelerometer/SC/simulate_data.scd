@@ -1,6 +1,9 @@
 ~max_output = 1.0;
 ~max_output = 0.2;
 ~max_output = 1.0;
+~accelRoutine.stop;
+        ~oscTarget.sendMsg("/accelerometer", 0.0, 0.0, 0.0);
+        ~oscTarget.sendMsg("/accelerometer", 1.0, 1.0, 1.0);
 
 (
 ~max_output = 1.0;

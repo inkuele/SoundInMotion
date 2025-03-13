@@ -1,0 +1,7 @@
+?
+netaddress 67108864 127.0.0.1
+localaddress 67108912 127.0.0.1 ''
+sendrate 67108864 off
+timeslice 67108864 on
+autoexportroot 201326609 "" parent()
+?

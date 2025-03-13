@@ -1,0 +1,6 @@
+?
+top 67108864 analyze1
+rate 201326609 60 me.time.rate
+exportmethod 67108864 datname
+autoexportroot 201326609 "" parent()
+?

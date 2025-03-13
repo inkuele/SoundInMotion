@@ -1,0 +1,6 @@
+?
+lag1 67108864 0.01
+lag2 67108864 0.1
+timeslice 67108864 on
+autoexportroot 201326609 "" parent()
+?

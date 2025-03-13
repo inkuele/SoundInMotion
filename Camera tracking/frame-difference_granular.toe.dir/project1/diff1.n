@@ -1,0 +1,10 @@
+TOP:diff
+tile 0 -50 130 97
+flags =  viewer 1 parlanguage 0
+inputs
+{
+0 	cache1
+1 	level1
+}
+color 0.55 0.55 0.55 
+end

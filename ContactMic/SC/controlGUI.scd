@@ -15,13 +15,10 @@ soundSel = EZListView.new(w,
 	"Sample1:",
 	[
 		"sound 0, no sound" ->{  ~sound = 0; },
-		"sound 1, ~stranga" ->{  ~sound = 1; },
+		"sound 1, ~fw" ->{  ~sound = 1; },
 		"sound 2, ~trigDrones" ->{  ~sound = 2; },
-		"sound 3, granulator" ->{  ~sound = 3; },
-		"sound 4, drC" ->{  ~sound = 4; },
-		"sound 5, ~string" ->{  ~sound = 5; },
-		"sound 6, sample player" ->{  ~sound = 6; },
-		"sound 7, comb" ->{  ~sound = 7; },
+		"sound 3, ~stranga" ->{  ~sound = 3; },
+
 
 	],
 	// globalAction: { |a| ("this is a global action of "++a.asString ).postln },

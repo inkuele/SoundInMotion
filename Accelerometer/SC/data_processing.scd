@@ -3,8 +3,8 @@
 // Initialize Variables and Sensor Data Processing //
 /////////////////////////////////////////////////////
 
-var debug = 1,                 // Debug flag: Set to 1 to print values, 0 to disable.
-    stlen = 5,                 // Short-term window length (used for quick variations).
+var debug = 0,                 // Debug flag: Set to 1 to print values, 0 to disable.
+    stlen = 10,                 // Short-term window length (used for quick variations).
     ltlen = 50,                // Long-term window length (used for more stable trends).
     speedxyz = SensorData.new;  // Create a new SensorDataExt object to track movement data.
 
@@ -29,7 +29,7 @@ speedxyz.ltlen_(ltlen);        // Set the long-term window size.
 
     // Compute the short-term standard deviation (measures quick fluctuations).
     // The `explin` function scales values exponentially from [0.001, 0.7] → [0, 1].
-    val = speedxyz.shortStdDev.explin(0.01, 10, 0, 1);
+    val = speedxyz.shortStdDev.explin(0.015, 10, 0, 1);
 
     // Compute the long-term standard deviation (measures gradual changes).
     // The `linlin` function scales values linearly from [0.001, 0.7] → [0, 1].
@@ -76,23 +76,7 @@ OSCdef(\minibeeRouter, { |msg|
     // Call a function (likely from `data_selection.scd`) to map sensor data to sound.
     ~data_sel.value(data[0], data[1], ~sound);
 
-}, '/accelerometer', nil, 8000 ).permanent_(false); // Listens to messages from Sensors2OSC app.
+}, '/accelerometer', nil, 9000 ).permanent_(false); // Listens to messages from Sensors2OSC app.
 )
 
 
-//////////////////////////////////////////////
-// Cleanup: Free Unused OSC Definitions    //
-//////////////////////////////////////////////
-
-// Free the existing OSC handler for "/accelerometer" if it exists.
-OSCdef(\minibeeRouter).free;
-
-// Define a simple test OSC handler to print incoming values from "/accelerometer".
-OSCdef(\test).free;
-OSCdef(\test, { |msg| msg.postln }, '/accelerometer', nil, 8000);
-
-s.freeAll
-
-OSCdef(\test).isRunning.postln;
-OSCdef(\test, { |msg| msg.postln }, '/accelerometer');
-OSCdef.freeAll;

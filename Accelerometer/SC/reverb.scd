@@ -1,19 +1,35 @@
 // reverb
 //var reverb;
 //reverb = Synth(\GVerb, [\outbus, 0], addAction:\addToTail);
+(
+// Define effect chain with reverb and companding
+Ndef(\effect, {
+	|in , thresh = 0.1, slopeBelow = 1.0, slopeAbove = 0.5, clampTime = 0.01, relaxTime = 0.3|
+	var output, audioInput = In.ar(in); // Input signal at audio-rate
 
-ProxyChain.add(
-	    \GVerb,  \filter -> { |in| GVerb.ar(in, 100) },
-		\FreeVerb,  \filter -> { |in| FreeVerb.ar(in, 1, 0.8) }
+	// Apply compander for dynamic control
+	output = Compander.ar(
+		audioInput,
+		audioInput,
+		thresh,
+		slopeBelow,
+		slopeAbove,
+		clampTime,
+		relaxTime
+	);
 
-);
+	// Reverb effect for spaciousness
+	output =  GVerb.ar(output) * 0.5;
 
-m = MasterFX.new(server: s,
-    numChannels: 8,
-    slotNames: [ \GVerb, \FreeVerb ],
-    busIndex: 0
-);
-m.gui;
+	// Limiting to control final peaks
+	output = Limiter.ar(output, 0.9);
+}).play;
+
+
+// Routing all Ndefs to the effect chain
+Ndef(\effect) << [
+	Ndef(\freq_wander), Ndef(\complexB), Ndef(\complexB)];
+)
 
 /*
 (

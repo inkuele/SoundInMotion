@@ -50,7 +50,7 @@ BPF.ar
  (50 * LFNoise1.ar(2).range(0, 1)) //extreme amplification of glitches.
 	).fold(-0.5, 0.5) * 0.3;
 
-	output = (bass + waves + clicks) * 0.5;
+	output = (bass + waves + clicks) * 0.25;
 
 	output = RLPF.ar(output, lpfFreq, 0.7);
 	output = RHPF.ar(output, hpfFreq.lag(0.1), 0.7);
@@ -61,7 +61,7 @@ BPF.ar
 
 }).play;
 
-~fw = Ndef(\freq_wander, { arg lo=70, hi=80, step=1, rate=10, volume=0, volume2 = 1, pan=0, lgate = 1, scale_val = 0.5339359416674, scale_tones = 1, deviation = 1, freq_scale = 1, bwr = 0.2, lowPass_scale = 1;
+Ndef(\freq_wander, { arg lo=70, hi=80, step=1, rate=10, volume=0, volume2 = 1, pan=0, lgate = 1, scale_val = 0.5339359416674, scale_tones = 1, deviation = 1, freq_scale = 1, bwr = 0.2, lowPass_scale = 1;
 	var output, freq, num_comb, num_tones, freq_list, bpassFreq;
 	num_comb = 6;
 	num_tones = num_comb * 2;
@@ -78,7 +78,7 @@ BPF.ar
 		Mix.new(VarSaw.ar(((freq  + Array.fill(num_tones, {gauss(0.0, 0.5) * deviation}))) * freq_scale, 0, 0.8, Array.fill(num_tones, {rrand(0.01, 0.1)}) )), LFNoise2.ar(0.5).range((freq * 0.634423), (freq* 1.45)) * lowPass_scale, 0.5
 	);
 
-	output = Mix.ar(Array.fill(num_comb,{ CombN.ar(output, 0.02, rrand(0.001, 0.02), 0.5, 1/num_comb) })) * 0.25 * Lag3UD.kr(volume * volume2, 0, 0.5 );
+	output = Mix.ar(Array.fill(num_comb,{ CombN.ar(output, 0.02, rrand(0.001, 0.02), 0.5, 1/num_comb) })) * 0.75 * Lag3UD.kr(volume * volume2, 0, 0.5 );
 //	output = Resonz.ar(output, bpassFreq, bwr, 10);
 	//output = LPF.ar(output, 1000);
 	output = LeakDC.ar(output);
@@ -91,12 +91,10 @@ BPF.ar
     // Stereo output
     output = Splay.ar(output, 1);  // Distributes across stereo channels
 
-    Out.ar(0, output);
-
 }).play;
 
 
-~stranga = Ndef(\stranga, {arg speed = 0, volume = 0, volume2 = 1, pitch =0.8, pitch_fine =0.5, pitch_dev = 1, decay_time = 2, reverb_amt = 1, pan = 1,
+Ndef(\stranga, {arg speed = 0, volume = 0, volume2 = 1, pitch =0.8, pitch_fine =0.5, pitch_dev = 1, decay_time = 2, reverb_amt = 1, pan = 1,
 	predelay = 0.048, combdecay=5, allpassdecay=1, revVol=0.31;
     var num_voices = 6, output, reverbed;
 	//pitch = MouseY.kr;

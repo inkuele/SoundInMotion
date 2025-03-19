@@ -14,11 +14,8 @@ s.waitForBoot{
 };
 )
 
-(
+NdefMixer(s);
 
-
-
-)
 
 (
 n = SWPlotterMonitor.new( {

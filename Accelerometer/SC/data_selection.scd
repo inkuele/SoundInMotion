@@ -14,23 +14,31 @@ todo:
 	{ which == 0} {
 
 
-		~fw.end;
+
+		Ndef(\freq_wander).end;
 		Ndef(\complexB).end;
-		~stranga.end;
+		Ndef(\stranga).end;
 
 
 	}
 	{ which == 1} {
 		// strings
-		~fw.play;
 
-		~fw.set(\volume,	val.linlin(0, 0.1, 0, 0.65));
-		~fw.set(\deviation, val.linlin(0.4, 0.8, 5, 150));
-		~fw.set(\step, val.linlin(0.3, 1, 0.01, 10));
-		~fw.set(\freq_scale, val.linlin(0.5, 1, 1, 2));
+		Ndef(\freq_wander).play;
 
-		~fw.set(\volume2, val.linlin(0.2, 1, 1, 4));
-		~fw.set(\lowPass_scale, val.linlin(0.3, 0.8, 1, 1));
+
+		Ndef(\freq_wander).set(\volume,	val.linlin(0, 0.1, 0, 0.65));
+
+		Ndef(\freq_wander).set(\deviation, val.linlin(0.4, 0.8, 5, 150));
+
+		Ndef(\freq_wander).set(\step, val.linlin(0.3, 1, 0.01, 10));
+
+		Ndef(\freq_wander).set(\freq_scale, val.linlin(0.5, 1, 1, 2));
+
+
+		Ndef(\freq_wander).set(\volume2, val.linlin(0.2, 1, 1, 4));
+
+		Ndef(\freq_wander).set(\lowPass_scale, val.linlin(0.3, 0.8, 1, 1));
 
 
 	}
@@ -41,28 +49,28 @@ todo:
 		Ndef(\complexB).set(\volume, val.linlin(0, 0.1, 0, 0.5));
 
 		Ndef(\complexB).set(\volume2, val.linlin(0.5, 1, 1, 2));
-		Ndef(\complexB).set(\lpfFreq, val.linexp(0.1, 0.8, 50, 20000));
+		Ndef(\complexB).set(\lpfFreq, val.linexp(0.1, 0.8, 200, 20000));
 
 		//Ndef(\complexB).set(\hpfFreq, val.linlin(0.9, 1, 10, 1000));
 
 
-		Ndef(\complexB).set(\decay_bass, val.linlin(0.6, 0.8, 1, 3));
+		Ndef(\complexB).set(\decay_bass, val.linlin(0.6, 0.8, 1, 2));
 
 		Ndef(\complexB).set(\speed, val.linlin(0, 0.2, 3, 1.5));
 		Ndef(\complexB).set(\freqBmul, val.linlin(0.5, 1, 1, 1.5));
 
 	}
 	{ which == 3 } {
-		~stranga.play;
-		~stranga.set(\volume, val.linlin(0, 0.05, 0, 1.5));
-		~stranga.set(\volume2, val.linexp(0.1, 1, 1, 5));
+		Ndef(\stranga).play;
+		Ndef(\stranga).set(\volume, val.linlin(0, 0.05, 0, 1.5));
+		Ndef(\stranga).set(\volume2, val.linexp(0.1, 1, 1, 5));
 
-		~stranga.set(\speed, val.linlin(0, 0.8, 0, 5));
-		~stranga.set(\pitch_dev, val.linlin(0.5, 1, 0.1, 2));
-		~stranga.set(\decay_time, val.linlin(0.1, 1, 6, 1));
-		~stranga.set(\pitch_fine, val.linlin(0.25, 1, 0.25, 1));
-		~stranga.set(\pan, 0);
-		//if(val > 0.95, {~stranga.set(\pitch, rrand(0.2, 1);) });
+		Ndef(\stranga).set(\speed, val.linlin(0, 0.8, 0, 5));
+		Ndef(\stranga).set(\pitch_dev, val.linlin(0.5, 1, 0.1, 2));
+		Ndef(\stranga).set(\decay_time, val.linlin(0.1, 1, 6, 1));
+		Ndef(\stranga).set(\pitch_fine, val.linlin(0.25, 1, 0.25, 1));
+		Ndef(\stranga).set(\pan, 0);
+		//if(val > 0.95, {Ndef(\stranga).set(\pitch, rrand(0.2, 1);) });
 
 		//sensitive.postln;
 

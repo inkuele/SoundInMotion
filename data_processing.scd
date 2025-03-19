@@ -3,7 +3,7 @@
 // Initialize Variables and Sensor Data Processing //
 /////////////////////////////////////////////////////
 
-var debug = 0,                 // Debug flag: Set to 1 to print values, 0 to disable.
+var debug = 1,                 // Debug flag: Set to 1 to print values, 0 to disable.
     stlen = 5,                 // Short-term window length (used for quick variations).
     ltlen = 50,                // Long-term window length (used for more stable trends).
     speedxyz = SensorData.new;  // Create a new SensorDataExt object to track movement data.
@@ -75,7 +75,7 @@ OSCdef(\minibeeRouter, { |msg|
     // Call a function (likely from `data_selection.scd`) to map sensor data to sound.
     ~data_sel.value(data[0], data[1], ~sound);
 
-}, "/accelerometer", nil, 9000 ).permanent_(false); // Listens to messages from Sensors2OSC app.
+}, '/accelerometer', nil, 8000 ).permanent_(false); // Listens to messages from Sensors2OSC app.
 )
 
 
@@ -91,3 +91,7 @@ OSCdef(\test).free;
 OSCdef(\test, { |msg| msg.postln }, '/accelerometer', nil, 8000);
 
 s.freeAll
+
+OSCdef(\test).isRunning.postln;
+OSCdef(\test, { |msg| msg.postln }, '/accelerometer');
+OSCdef.freeAll;

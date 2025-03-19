@@ -1,9 +1,11 @@
+#%%
+
 import argparse
 import time
 from pythonosc import udp_client
 
 # Configuration
-OSC_IP = "127.0.0.1"
+OSC_IP = "192.168.2.45"
 OSC_PORT = 8000  # Ensure this matches the dynamically assigned port from the main script
 OSC_ADDRESS = "/accelerometer"
 
@@ -42,3 +44,5 @@ if __name__ == "__main__":
 
     print(f"Sending predefined OSC sequence to {OSC_IP}:{OSC_PORT} every 0.5 seconds...")
     send_osc_sequence()
+
+# %%

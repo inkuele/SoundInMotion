@@ -2,12 +2,13 @@
 var envelope = Env([0, 0.3, 0.7, 1], [1, 3, 1].normalizeSum, [-2, 2, 2]);
 ~lastVal = 0;
 ~sensitivity = 0.5;
-	~sound = 0;
+~sound = 0;
 
 
 // Create a MIDI connection to the virtual port
 MIDIClient.init;  // Initialize MIDI system
-~midiOut = MIDIOut.newByName("IAC Driver", "Bus 1"); // Use the correct MIDI port name
+// ~midiOut = MIDIOut.newByName("IAC Driver", "Bus 1"); // OSX
+~midiOut = MIDIOut.newByName("loopMIDI Port", "loopMIDI Port"); // Use the correct MIDI port name
 
 
 
@@ -24,18 +25,20 @@ MIDIClient.init;  // Initialize MIDI system
 
 	~data.addValue( ~amp );
 	~data.stlen_( 5 );
-//	~sma = ~data.shortSMA;
-	~sma = ~data.expMA;
-	~expMa = envelope[~data.expMA.linlin(0,0.7, 0, 1)];
-			//~ratef = (Scale.bartok.ratios.choose * 0.7);
+	//	~sma = ~data.shortSMA;
+	~sma = ~data.movingAverage1;
+	~ma = envelope[~data.movingAverage1.linlin(0,0.7, 0, 1)];
+	//~ratef = (Scale.bartok.ratios.choose * 0.7);
 
-	~data_sel.value(~expMa, ~rawamp, ~sound );
-	    // Convert amplitude to MIDI CC value (0-127)
-    ccValue = (~expMa * 127).clip(0, 127).round;
+	~data_sel.value(~ma, ~rawamp, ~sound );
+	// Convert amplitude to MIDI CC value (0-127)
+	ccValue = (~ma * 127).clip(0, 127).round;
 
-    // Send MIDI CC message (CC #1 is Modulation Wheel, change if needed)
-    ~midiOut.control(0, 1, ccValue); // (MIDI channel 0, CC#1, value)
-
+	if(ccValue > 0, {
+		// Send MIDI CC message (CC #1 is Modulation Wheel, change if needed)
+		// Send MIDI only if the value is more than 0
+		~midiOut.control(0, 1, ccValue.asInteger); // (MIDI channel 0, CC#1, value)
+	});
 
 }, '/input');
 (thisProcess.nowExecutingPath.dirname ++ "/data_selection.scd").load;

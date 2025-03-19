@@ -1,3 +1,4 @@
+
 #%%
 
 from pythonosc import dispatcher, osc_server, udp_client
@@ -11,8 +12,9 @@ SHORT_TERM_WINDOW = 5
 LONG_TERM_WINDOW = 50
 OSC_INPUT_PORT = 8000
 OSC_OUTPUT_IP = "127.0.0.1"
-OSC_OUTPUT_PORT = 9000
-OSC_ADDRESS = "/accelerometer"
+OSC_OUTPUT_PORT = 11000
+OSC_IN_ADDRESS = "/accelerometer"
+OSC_OUT_ADDRESS = "/live/device/set/parameter/value"
 
 # Buffers for computing statistics
 short_term_buffer = []
@@ -61,6 +63,9 @@ def sensor_handler(address, *args):
     val = explin(short_std, 0.01, 0.7, 0, 1)
     longval = np.interp(long_std, [0.001, 0.7], [0, 1])
 
+    # Map val from range 0-1 to 0-127
+    mapped_val = int(val * 127)
+
     # Update lastPeak logic
     if long_term_buffer:
         last_peak = max(long_term_buffer)
@@ -68,13 +73,14 @@ def sensor_handler(address, *args):
     # Debug output
     if DEBUG:
         print(f"Value: {val:.5f} | Last Peak: {last_peak:.5f} | LongVal: {longval:.5f}")
+        print(f"Mapped Value: {mapped_val}")
 
-    # Send processed data via OSC
-    client.send_message("/processed_data", [val, longval, last_peak])
+    # Send processed data via OSC in format "0 0 1 mapped_val"
+    client.send_message(OSC_OUT_ADDRESS, [0, 0, 1, mapped_val])
 
 def start_osc_server():
     disp = dispatcher.Dispatcher()
-    disp.map(OSC_ADDRESS, sensor_handler)
+    disp.map(OSC_IN_ADDRESS, sensor_handler)
     server = osc_server.ThreadingOSCUDPServer(("0.0.0.0", OSC_INPUT_PORT), disp)
     print(f"Listening for OSC messages on port {OSC_INPUT_PORT}...")
     server.serve_forever()

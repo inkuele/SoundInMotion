@@ -1,0 +1,6 @@
+?
+width 67108864 0.23
+ramprate 201326609 60 me.time.rate
+timeslice 67108864 on
+autoexportroot 201326609 "" parent()
+?

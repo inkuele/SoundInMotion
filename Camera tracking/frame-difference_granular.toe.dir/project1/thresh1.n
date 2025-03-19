@@ -1,0 +1,9 @@
+TOP:thresh
+tile 250 150 130 97
+flags =  viewer 1 parlanguage 0
+inputs
+{
+0 	blur1
+}
+color 0.55 0.55 0.55 
+end

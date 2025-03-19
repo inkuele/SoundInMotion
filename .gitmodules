@@ -1,0 +1,3 @@
+[submodule "OddBall/SC"]
+	path = OddBall/SC
+	url = git@github.com:inkuele/oddball.git

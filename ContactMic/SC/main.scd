@@ -7,7 +7,7 @@ s.waitForBoot{
 	(thisProcess.nowExecutingPath.dirname ++ "/controlGUI.scd").load;
 	(thisProcess.nowExecutingPath.dirname ++ "/data_selection.scd").load;
 	s.meter;
-	~data = SensorDataExt.new;
+	~data = SensorData.new;
 	(thisProcess.nowExecutingPath.dirname ++ "/reverb.scd").load;
 	(thisProcess.nowExecutingPath.dirname ++ "/amplitude_processing.scd").load;
 	(thisProcess.nowExecutingPath.dirname ++ "/data_processing.scd").load;

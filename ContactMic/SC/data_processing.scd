@@ -7,8 +7,8 @@ var envelope = Env([0, 0.3, 0.7, 1], [1, 3, 1].normalizeSum, [-2, 2, 2]);
 
 // Create a MIDI connection to the virtual port
 MIDIClient.init;  // Initialize MIDI system
-// ~midiOut = MIDIOut.newByName("IAC Driver", "Bus 1"); // OSX
-~midiOut = MIDIOut.newByName("loopMIDI Port", "loopMIDI Port"); // Use the correct MIDI port name
+~midiOut = MIDIOut.newByName("IAC Driver", "Bus 1"); // OSX
+// ~midiOut = MIDIOut.newByName("loopMIDI Port", "loopMIDI Port"); // Windows, Use the correct MIDI port name
 
 
 
@@ -25,8 +25,7 @@ MIDIClient.init;  // Initialize MIDI system
 
 	~data.addValue( ~amp );
 	~data.stlen_( 5 );
-	//	~sma = ~data.shortSMA;
-	~sma = ~data.movingAverage1;
+
 	~ma = envelope[~data.movingAverage1.linlin(0,0.7, 0, 1)];
 	//~ratef = (Scale.bartok.ratios.choose * 0.7);
 

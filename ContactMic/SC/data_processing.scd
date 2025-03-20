@@ -1,7 +1,7 @@
 (
 var envelope = Env([0, 0.3, 0.7, 1], [1, 3, 1].normalizeSum, [-2, 2, 2]);
 ~lastVal = 0;
-~sensitivity = 0.5;
+~sensitivity = 1.0;
 ~sound = 0;
 
 
@@ -26,7 +26,7 @@ MIDIClient.init;  // Initialize MIDI system
 	~data.addValue( ~amp );
 	~data.stlen_( 5 );
 
-	~ma = envelope[~data.movingAverage1.linlin(0,0.7, 0, 1)];
+	~ma = envelope[~data.movingAverage1.linlin(0,0.8, 0, 1)] * ~sensitivity;
 	//~ratef = (Scale.bartok.ratios.choose * 0.7);
 
 	~data_sel.value(~ma, ~rawamp, ~sound );

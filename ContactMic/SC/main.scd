@@ -21,7 +21,7 @@ NdefMixer(s);
 n = SWPlotterMonitor.new( {
 	//data to plot
 	[
-		[~amp, ~sma,  ~ma] // view the two streams superimposed
+		[~amp,  ~ma] // view the two streams superimposed
 		//[~~e - ~f], // view their differene
 		//[(~e- ~f).sign] // view sign of difference
 ]},

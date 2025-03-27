@@ -1,7 +1,7 @@
 
 (
-// Server.default.options.device = "ASIO : Focusrite USB ASIO"; //set the soundcard to use the asio driver
-Server.default.options.device = "UMC204HD 192k";
+Server.default.options.device = "ASIO : Focusrite USB ASIO"; //set the soundcard to use the asio driver
+// Server.default.options.device = "UMC204HD 192k";
 
 s.waitForBoot{
 	// Create global variables

@@ -1,2 +1,4 @@
+.gitmodules
+.gitignore
 ._*
 .DS_Store*

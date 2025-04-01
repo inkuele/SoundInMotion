@@ -1,6 +1,6 @@
 
 (
-Server.default.options.device = "ASIO : Focusrite USB ASIO"; //set the soundcard to use the asio driver
+// Server.default.options.device = "ASIO : Focusrite USB ASIO"; //set the soundcard to use the asio driver
 // Server.default.options.device = "UMC204HD 192k";
 
 s.waitForBoot{
@@ -198,7 +198,7 @@ s.waitForBoot{
 	// Run everything inside a Routine to ensure proper execution order
 	Routine({
 		// Create the GUI
-		loadBufferAndSynths.("C:/Users/ziw-i/Desktop/Workshop/7_framedifference_sound/AudioFIles/09 - Mutual Core_slice.wav");
+		loadBufferAndSynths.("/Users/marcellolussana/Music/SoundInMotion/Camera tracking/SC/09 - Mutual Core_slice.wav");
 		createGUI.();
 		// 1. OSC Listener for /r (Grain Control)
 		OSCdef(\grainControl, { |msg|

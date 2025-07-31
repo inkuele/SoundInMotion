@@ -1,38 +1,37 @@
-name: Create and Upload Release ZIP with Submodules
+name: Create and Upload Release ZIP (Manual Submodule Clone)
 
 on:
   push:
     tags:
-      - 'v*'  # e.g. v1.0, v2.1.3, etc.
+      - 'v*'  # Triggers on version tags like v1.0, v2.1.3
 
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo (no submodules yet)
+      - name: Checkout main repo
         uses: actions/checkout@v4
         with:
           submodules: false
           fetch-depth: 0
 
-      - name: Override submodule URL to HTTPS for GitHub CI
-        run: git config submodule.OddBall/SC.url https://github.com/inkuele/oddball.git
+      - name: Manually clone submodule repo into OddBall/SC
+        run: |
+          mkdir -p OddBall
+          git clone https://github.com/inkuele/oddball.git OddBall/SC
 
-      - name: Show submodule status
-        run: git submodule update --init --recursive
+      - name: Verify submodule contents
+        run: ls -R OddBall/SC
 
-      - name: Show submodule contents (debug)
-        run: ls -R OddBall/SC  # Replace with your actual submodule path if needed
-
-      - name: Create ZIP with submodules
+      - name: Create ZIP including manually cloned submodule
         run: |
           TAG_NAME=$(echo "${GITHUB_REF##*/}")
           ZIP_NAME="soundinmotion-${TAG_NAME}.zip"
           zip -r "$ZIP_NAME" . -x '*.git*'
           echo "ZIP_NAME=$ZIP_NAME" >> $GITHUB_ENV
 
-      - name: Create GitHub Release & upload asset
+      - name: Upload ZIP to GitHub Release
         uses: softprops/action-gh-release@v1
         with:
           name: "Release ${{ github.ref_name }}"

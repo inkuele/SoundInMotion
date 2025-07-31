@@ -8,7 +8,7 @@ The sound examples demonstrate various approaches to motion-based sound interact
 
 ### Software Environments  
 The examples are available in:  
-- **Ableton Live Suite**  
+- **Ableton Live Suite 11 and 12**  
 - **Ableton Live Lite**  
 - **SuperCollider**  
 

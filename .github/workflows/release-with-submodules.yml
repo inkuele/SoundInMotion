@@ -13,11 +13,13 @@ jobs:
       - name: Checkout repo with submodules
         uses: actions/checkout@v4
         with:
-          submodules: recursive
           fetch-depth: 0
 
       - name: Show submodule status (debug)
-        run: git submodule status
+        run: git submodule status --init --recursive
+
+      - name: Show submodule contents (debug)
+        run: ls -R OddBall/SC  # Replace with your actual submodule path if needed
 
       - name: Create ZIP with submodules
         run: |

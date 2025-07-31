@@ -1,34 +1,37 @@
-name: Create release ZIP with submodules
+name: Create and Upload Release ZIP with Submodules
 
 on:
-  release:
-    types: [published]
-
-permissions:
-  contents: write  # This fixes the "resource not accessible" error
+  push:
+    tags:
+      - 'v*'  # e.g. v1.0, v2.1.3, etc.
 
 jobs:
-  build:
+  build-and-release:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository with submodules
+      - name: Checkout repo with submodules
         uses: actions/checkout@v4
         with:
           submodules: recursive
           fetch-depth: 0
 
-      - name: Show submodule status (debugging)
+      - name: Show submodule status (debug)
         run: git submodule status
 
-      - name: Create ZIP including submodules
+      - name: Create ZIP with submodules
         run: |
-          zip -r full-release.zip . -x '*.git*'
+          TAG_NAME=$(echo "${GITHUB_REF##*/}")
+          ZIP_NAME="soundinmotion-${TAG_NAME}.zip"
+          zip -r "$ZIP_NAME" . -x '*.git*'
+          echo "ZIP_NAME=$ZIP_NAME" >> $GITHUB_ENV
 
-      - name: Upload ZIP to GitHub release
+      - name: Create GitHub Release & upload asset
         uses: softprops/action-gh-release@v1
         with:
-          files: full-release.zip
+          name: "Release ${{ github.ref_name }}"
+          tag_name: ${{ github.ref_name }}
+          files: ${{ env.ZIP_NAME }}
         env:
           GITHUB_TOKEN: ${{ secrets.BUSCON_SOUNDINMOTION }}
 

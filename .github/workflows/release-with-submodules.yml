@@ -1,0 +1,31 @@
+name: Create release ZIP with submodules
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository with submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive  # This ensures your OddBall/SC submodule is included
+          fetch-depth: 0
+
+      - name: Show submodule status (debugging)
+        run: git submodule status
+
+      - name: Create ZIP including submodules
+        run: |
+          zip -r full-release.zip . -x '*.git*'
+
+      - name: Upload ZIP to GitHub release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: full-release.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

@@ -10,13 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo with submodules
+      - name: Checkout repo (no submodules yet)
         uses: actions/checkout@v4
         with:
-          submodules: recursive
+          submodules: false
           fetch-depth: 0
 
-      - name: Show submodule status (debug)
+      - name: Override submodule URL to HTTPS for GitHub CI
+        run: git config submodule.OddBall/SC.url https://github.com/inkuele/oddball.git
+
+      - name: Show submodule status
         run: git submodule update --init --recursive
 
       - name: Show submodule contents (debug)

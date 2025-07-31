@@ -4,6 +4,9 @@ on:
   release:
     types: [published]
 
+permissions:
+  contents: write  # This fixes the "resource not accessible" error
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -12,7 +15,7 @@ jobs:
       - name: Checkout repository with submodules
         uses: actions/checkout@v4
         with:
-          submodules: recursive  # This ensures your OddBall/SC submodule is included
+          submodules: recursive
           fetch-depth: 0
 
       - name: Show submodule status (debugging)

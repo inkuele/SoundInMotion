@@ -15,7 +15,7 @@ The examples are available in:
 ### Sensor Inputs  
 These examples utilize motion and contact-based sensor data, including:  
 - **Smartphone accelerometers** – capturing movement data from mobile devices  
-- **Kinect camera** – tracking body movements and gestures  
+- **Video camera** – tracking body movements and gestures  
 - **Oddball** – a motion-sensitive musical device  
 - **Contact microphones** – detecting vibrations and surface interactions  
 
